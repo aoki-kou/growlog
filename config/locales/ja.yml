@@ -143,3 +143,15 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+  home:
+    index:
+      title: Growlog
+      goals_create: 目標を登録する
+  goals:
+    new:
+      title: 目標登録
+      create: 登録
+      goals_title: 目標名
+    index:
+      title: 目標一覧
+      

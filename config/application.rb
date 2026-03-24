@@ -10,7 +10,7 @@ module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
-    
+
     config.i18n.default_locale = :ja
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
@@ -19,7 +19,9 @@ module App
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.generators do |g|
-      g.test_framework false
+      g.skip_routes true
+      g.helper false
+      g.test_framework nil
     end
     # Configuration for the application, engines, and railties goes here.
     #

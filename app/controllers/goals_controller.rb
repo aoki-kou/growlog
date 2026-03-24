@@ -10,9 +10,9 @@ class GoalsController < ApplicationController
   def create
     @goal = current_user.goals.build(goal_params)
     if @goal.save
-      redirect_to root_path, success: '目標が作成できました'
+      redirect_to root_path, success: "目標が作成できました"
     else
-      flash.now[:danger] = '目標が作成できませんでした'
+      flash.now[:danger] = "目標が作成できませんでした"
       render :new, status: :unprocessable_entity
     end
   end
