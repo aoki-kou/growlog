@@ -1,0 +1,24 @@
+<% content_for(:title, t('.title')) %>
+
+<h1><%= t('.title') %></h1>
+
+<%= form_with model: @goal, local: true do |f| %>
+  <% if @goal.errors.any? %>
+    <div>
+      <ul>
+        <% @goal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, t('.goals_title') %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.submit t('.create') %>
+  </div>
+<% end %>

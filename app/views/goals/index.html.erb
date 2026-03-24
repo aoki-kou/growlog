@@ -1,0 +1,11 @@
+<% content_for(:title, t('.title')) %>
+
+<h1><%= t('.title') %></h1>
+
+<%= link_to t('.new.title'), new_goal_path %>
+
+<ul>
+  <% @goals.each do |goal| %>
+    <li><%= goal.title %></li>
+  <% end %>
+</ul>
