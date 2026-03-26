@@ -4,8 +4,3 @@
 
 <p>ようこそ <%= current_user.name %> さん</p>
 
-<%= link_to t('.goals_create'), new_goal_path %>
-
-<br>
-
-<%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
