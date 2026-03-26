@@ -154,4 +154,10 @@ ja:
       goals_title: 目標名
     index:
       title: 目標一覧
+  shared:
+    header:
+      goals_index: 目標一覧
+      goals_create: 目標登録
+      logout: ログアウト
+      account_create: アカウント登録
       
