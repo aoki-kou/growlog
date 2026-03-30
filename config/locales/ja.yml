@@ -147,6 +147,10 @@ ja:
     index:
       title: Growlog
       goals_create: 目標を登録する
+    goal_tree:
+      achieved: 今日は水やり済みです
+      create: 目標を登録してください
+      button: 達成
   goals:
     new:
       title: 目標登録
@@ -160,4 +164,3 @@ ja:
       goals_create: 目標登録
       logout: ログアウト
       account_create: アカウント登録
-      
