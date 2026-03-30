@@ -1,0 +1,12 @@
+<% if @goal.present? %>
+  <p>木が表示されています</p>
+
+  <% if @goal.checkins.exists?(checked_on: Date.current) %>
+    <p><%= t('.achieved') %></p>
+  <% else %>
+    <%= button_to t('.button'), checkins_path(goal_id: @goal.id), method: :post %>
+  <% end %>
+
+<% else %>
+  <p><%= t('.create') %></p>
+<% end %>

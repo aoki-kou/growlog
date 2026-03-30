@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_24_183517) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_30_061748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "checkins", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.date "checked_on", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id", "checked_on"], name: "index_checkins_on_goal_id_and_checked_on", unique: true
+    t.index ["goal_id"], name: "index_checkins_on_goal_id"
+  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title", null: false
@@ -35,5 +44,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_24_183517) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "checkins", "goals"
   add_foreign_key "goals", "users"
 end
