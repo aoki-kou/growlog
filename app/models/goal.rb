@@ -5,8 +5,8 @@ class Goal < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
 
   TREE_STAGES = {
-    0 => "タネ",
-    1 => "芽",
+    0 => {name: "タネ", image: 'trees/種子の静かな躍動.png'},
+    1 => {name: "芽", image: 'trees/新芽の誕生.png'},
     3 => "少し高く成長",
     6 => "葉が多くなる",
     10 => "小さい木になる",

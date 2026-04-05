@@ -1,6 +1,7 @@
 <% if @goal.present? %>
   <p>総達成回数：<%= @goal.checkin_count %>回</p>
-  <p>木の状態：<%= @goal.tree_stage %></p>
+  <p><%= @goal.tree_stage[:name] %></p>
+  <%= image_tag @goal.tree_stage[:image], size: '300x300' %>
 
   <% if @goal.checkins.exists?(checked_on: Date.current) %>
     <p><%= t('.achieved') %></p>
