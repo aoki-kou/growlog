@@ -1,24 +1,88 @@
-export function DashboardTree() {
+export function DashboardTree({ count }) {
+  const getStage = (count) => {
+    if (count === 0) return "seed";
+    if (count < 3) return "sprout";
+    if (count < 10) return "young";
+    if (count < 21) return "tree";
+    return "bigTree";
+  };
+
+  const stage = getStage(count);
+
   return (
-    <div className="relative mx-auto h-[360px] w-[360px]">
-      {/* 地面の影 */}
-      <div className="absolute bottom-4 left-1/2 h-8 w-48 -translate-x-1/2 rounded-full bg-stone-400/40" />
+    <div className="flex flex-col items-center justify-center">
+      <div className="relative h-[320px] w-[320px]">
+        {/*地面*/}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+          <div className="h-10 w-74 rounded-t-full bg-gradient-to-b from-amber-400 to-amber-800 shadow-lg" />
+        </div>
 
-      {/* 幹 */}
-      <div className="absolute bottom-4 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-xl rounded-t-md bg-amber-800" />
-      <div className="absolute bottom-6 left-1/2 h-34 w-5 -translate-x-[65%] rounded-full bg-amber-700/70" />
+        {/*木*/}
+        {stage === "seed" && <Seed />}
+        {stage === "sprout" && <Sprout />}
+        {stage === "young" && <YoungTree />}
+        {stage === "tree" && <Tree />}
+        {stage === "bigTree" && <BigTree />}
+      </div>
+    </div>
+  );
+}
 
-      {/* 葉 */}
-      <div className="absolute bottom-28 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-green-900/70" />
-      <div className="absolute bottom-32 left-[78px] h-32 w-32 rounded-full bg-green-800/70" />
-      <div className="absolute bottom-32 right-[78px] h-32 w-32 rounded-full bg-green-800/70" />
-      <div className="absolute bottom-40 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-lime-600/70" />
+function Seed() {
+  return (
+    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
+      {/* ⛰ 盛り土（これが膨らみ） */}
+      <div className="h-10 w-20 rounded-t-full bg-gradient-to-b from-amber-500 to-amber-800 shadow-md" />
+    </div>
+  );
+}
 
-      {/* 明るい葉 */}
-      <div className="absolute bottom-[172px] left-[126px] h-10 w-10 rounded-full bg-lime-500/70" />
-      <div className="absolute bottom-[145px] left-[165px] h-9 w-9 rounded-full bg-lime-500/70" />
-      <div className="absolute bottom-[160px] left-[205px] h-9 w-9 rounded-full bg-lime-500/70" />
+function Sprout() {
+  return (
+    <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      <div className="relative flex items-end justify-center">
+        <div className="h-20 w-2 rounded-full bg-green-700" />
+        <div className="absolute bottom-12 right-1 h-8 w-12 rotate-[-25deg] rounded-full bg-lime-500" />
+        <div className="absolute bottom-14 left-1 h-8 w-12 rotate-[25deg] rounded-full bg-lime-400" />
+      </div>
+    </div>
+  );
+}
 
+function YoungTree() {
+  return (
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+      <div className="relative flex items-end justify-center">
+        <div className="h-28 w-6 rounded-md bg-amber-800" />
+        <div className="absolute bottom-20 h-24 w-24 rounded-full bg-green-500 shadow-md" />
+      </div>
+    </div>
+  );
+}
+
+function Tree() {
+  return (
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+      <div className="relative flex items-end justify-center">
+        <div className="h-36 w-8 rounded-md bg-amber-800" />
+        <div className="absolute bottom-24 h-28 w-28 rounded-full bg-green-600 shadow-md" />
+        <div className="absolute bottom-28 -left-8 h-20 w-20 rounded-full bg-green-500" />
+        <div className="absolute bottom-28 -right-8 h-20 w-20 rounded-full bg-green-500" />
+      </div>
+    </div>
+  );
+}
+
+function BigTree() {
+  return (
+    <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+      <div className="relative flex items-end justify-center">
+        <div className="h-44 w-10 rounded-md bg-amber-900" />
+        <div className="absolute bottom-28 h-36 w-36 rounded-full bg-green-700 shadow-md" />
+        <div className="absolute bottom-32 -left-12 h-24 w-24 rounded-full bg-green-600" />
+        <div className="absolute bottom-32 -right-12 h-24 w-24 rounded-full bg-green-600" />
+        <div className="absolute bottom-40 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full bg-lime-500/80" />
+      </div>
     </div>
   );
 }
