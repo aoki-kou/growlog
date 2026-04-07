@@ -79,6 +79,12 @@ export function Dashboard() {
           </Link>
 
           <div className="flex items-center gap-4">
+            <Link to="/goals/new">
+              <Button className="rounded-xl bg-[#02021f] px-5 py-2 text-base text-white hover:bg-[#111138]">
+                目標登録
+              </Button>
+            </Link>
+
             <Link to="/">
               <Button variant="ghost" className="p-2">
                 <Home className="h-6 w-6 text-slate-900" />

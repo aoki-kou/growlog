@@ -8,6 +8,10 @@ function Tracker() {
   return <div className="p-8 text-3xl">トラッカー画面</div>;
 }
 
+function GoalNew() {
+  return <div className="p-8 text-3xl">目標登録画面</div>;
+}
+
 function App() {
   return (
     <BrowserRouter>

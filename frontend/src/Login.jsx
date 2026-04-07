@@ -29,18 +29,7 @@ const handleSubmit = async (e) => {
       }),
     });
 
-    console.log("status:", response.status);
-    console.log("ok:", response.ok);
-
-    const text = await response.text();
-    console.log("response text:", text);
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error("RailsがJSONではなくHTMLを返しています");
-    }
+    const data = await response.json();
 
     if (response.ok && data.success) {
       navigate("/dashboard");

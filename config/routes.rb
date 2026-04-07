@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: %i[show]
     resources :checkins, only: %i[create]
     resource :session, only: %i[create destroy]
+    resources :users, only: %i[create]
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
