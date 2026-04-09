@@ -3,20 +3,22 @@ module Api
     before_action :authenticate_user!
 
     def show
-      goal = current_user.goals.first
+      goals = current_user.goals
 
-      if goal.present?
+      if goals.present?
         render json: {
-          goal: {
+          goals: goals.map do |goal|
+            {
             id: goal.id,
             title: goal.title,
             checkin_count: goal.checkins.count,
             today_checked: goal.checkins.exists?(checked_on: Date.current),
             tree_stage: goal.tree_stage
-          }
+            }
+          end
         }
       else
-        render json: { goal: nil }
+        render json: { goals: nil }
       end
     end
   end
