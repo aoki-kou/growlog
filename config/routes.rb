@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :checkins, only: %i[create]
     resource :session, only: %i[create destroy]
     resources :users, only: %i[create]
+    resources :goals, only: %i[create]
+    get 'me', to: "me#show"
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

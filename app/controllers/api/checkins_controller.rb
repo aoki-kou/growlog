@@ -1,7 +1,8 @@
 module Api
   class CheckinsController < ApplicationController
     skip_forgery_protection
-    before_action :authenticate_user!
+    skip_before_action :authenticate_user!
+    before_action :require_login
 
     def create
       goal = current_user.goals.find(params[:goal_id])
@@ -19,6 +20,14 @@ module Api
           success: false,
           errors: checkin.errors.full_messages
         }, status: :unprocessable_entity
+      end
+
+      private
+
+      def require_login
+        return if user_signed_in?
+
+        render json: { error: "unauthorized" }, status: :unauthorized
       end
     end
   end
