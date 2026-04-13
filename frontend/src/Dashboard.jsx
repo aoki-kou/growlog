@@ -31,9 +31,36 @@ export function Dashboard() {
     }
   };
 
+  const checkAuth = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/me", {
+        credentials: "include",
+      });
+
+      if (response.status === 401) {
+        navigate("/login");
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("認証に失敗しました", error);
+      navigate("/login");
+      return false;
+    }
+  };
+
   useEffect(() => {
-    fetchDashboard();
-  }, []);
+    const initializeDashboard = async () => {
+      const isLoggedIn = await checkAuth();
+
+      if (!isLoggedIn) return;
+
+      await fetchDashboard();
+    };
+
+    initializeDashboard();
+  }, [navigate]);
 
   const handleCheck = async () => {
     if (currentGoal?.today_checked || !currentGoal) return;
@@ -51,7 +78,7 @@ export function Dashboard() {
       const data = await response.json();
 
       if (data.success) {
-        fetchDashboard();
+        await fetchDashboard();
       } else {
         console.error(data.errors);
       }

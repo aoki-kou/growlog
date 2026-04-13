@@ -1,7 +1,8 @@
 module Api
   class GoalsController < ApplicationController
     skip_forgery_protection
-    before_action :authenticate_user!
+    skip_before_action :authenticate_user!
+    before_action :require_login
 
     def create
       goal = current_user.goals.new(goal_params)
@@ -26,6 +27,12 @@ module Api
 
     def goal_params
       params.permit(:title)
+    end
+
+    def require_login
+      return if user_signed_in?
+
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 end

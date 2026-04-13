@@ -1,6 +1,7 @@
 module Api
   class DashboardsController < ApplicationController
-    before_action :authenticate_user!
+    skip_before_action :authenticate_user!
+    before_action :require_login
 
     def show
       goals = current_user.goals
@@ -19,6 +20,14 @@ module Api
         }
       else
         render json: { goals: nil }
+      end
+
+      private
+
+      def require_login
+        return if user_signed_in?
+
+        render json: { error: "unauthorized" }, status: :unauthorized
       end
     end
   end
