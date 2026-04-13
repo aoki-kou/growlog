@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :checkins, only: %i[create]
     resource :session, only: %i[create destroy]
     resources :users, only: %i[create]
-    resources :goals, only: %i[create]
+    resources :goals, only: %i[index create]
     get 'me', to: "me#show"
   end
 

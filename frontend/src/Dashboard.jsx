@@ -186,6 +186,12 @@ export function Dashboard() {
               </Button>
             </Link>
 
+            <Link to="/goals">
+              <Button variant="ghost" className="text-base text-slate-900">
+                目標一覧
+              </Button>
+            </Link>
+
             <Button 
               onClick={handleLogout}
               variant="ghost"

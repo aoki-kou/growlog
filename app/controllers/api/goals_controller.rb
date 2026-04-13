@@ -4,6 +4,22 @@ module Api
     skip_before_action :authenticate_user!
     before_action :require_login
 
+    def index
+      goals = current_user.goals
+
+      render json: {
+        goals: goals.map do |goal|
+          {
+            id: goal.id,
+            title: goal.title,
+            checkin_count: goal.checkins.count,
+            today_checked: goal.checkins.exists?(checked_on: Date.current),
+            tree_stage: goal.tree_stage
+          }
+        end
+      }
+    end
+
     def create
       goal = current_user.goals.new(goal_params)
 
