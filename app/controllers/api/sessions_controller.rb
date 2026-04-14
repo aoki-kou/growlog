@@ -1,7 +1,7 @@
 module Api
   class SessionsController < ApplicationController
     skip_forgery_protection
-    skip_before_action :authenticate_user!, only: [:create]
+    skip_before_action :authenticate_user!, only: [ :create ]
 
     def create
       user = User.find_by(email: params[:email])
