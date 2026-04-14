@@ -4,7 +4,7 @@ module Api
     before_action :require_login
 
     def show
-        render json:{
+        render json: {
           user: {
             id: current_user.id,
             name: current_user.name,

@@ -52,6 +52,30 @@ export function GoalsIndex() {
     }
   };
 
+  const handleDelete = async (goalId) => {
+    if (!window.confirm("この目標を削除しますか？")) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/goals/${goalId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== goalId));
+      } else {
+        console.error(data.error || "削除に失敗しました");
+      }
+    } catch (error) {
+      console.error("削除に失敗しました", error);
+    }
+  };
+
   useEffect(() => {
     fetchGoals();
   }, [navigate]);
@@ -139,12 +163,14 @@ export function GoalsIndex() {
                   {goal.today_checked ? "今日は達成済みです" : "今日はまだ未達成です"}
                 </p>
 
-                <div className="mt-6">
-                  <Link to="/dashboard">
-                    <Button variant="outline" className="w-full rounded-xl">
-                      Top
+                <div className="mt-6 flex gap-3">
+                    <Button 
+                      onClick={() => handleDelete(goal.id)}
+                      variant="outline"
+                      className="flex-1 rounded-xl text-red-600 border-red-300"
+                    >
+                      削除
                     </Button>
-                  </Link>
                 </div>
               </div>
             ))}

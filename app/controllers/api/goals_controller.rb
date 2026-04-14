@@ -39,6 +39,17 @@ module Api
       end
     end
 
+    def destroy
+      goal = current_user.goals.find(params[:id])
+
+      goal.destroy!
+
+      render json: {
+        success: true
+      }
+    end
+
+
     private
 
     def goal_params
