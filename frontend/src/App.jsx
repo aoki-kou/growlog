@@ -4,6 +4,7 @@ import { Login } from "./Login";
 import { Register } from "./Register";
 import { Dashboard } from "./Dashboard";
 import { GoalNew } from "./GoalNew";
+import { GoalsIndex } from "./GoalsIndex";
 
 function Tracker() {
   return <div className="p-8 text-3xl">トラッカー画面</div>;
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/goals/new" element={<GoalNew />} />
+        <Route path="/goals" element={<GoalsIndex />} />
       </Routes>
     </BrowserRouter>
   );

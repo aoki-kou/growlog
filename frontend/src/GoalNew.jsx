@@ -52,7 +52,7 @@ export function GoalNew() {
           <div className="flex items-center gap-4">
             <Link to="/dashboard">
               <Button variant="ghost" className="text-lg">
-                ダッシュボード
+                Top
               </Button>
             </Link>
           </div>

@@ -21,14 +21,14 @@ module Api
           errors: checkin.errors.full_messages
         }, status: :unprocessable_entity
       end
+    end
 
-      private
+    private
 
-      def require_login
-        return if user_signed_in?
+    def require_login
+      return if user_signed_in?
 
-        render json: { error: "unauthorized" }, status: :unauthorized
-      end
+      render json: { error: "unauthorized" }, status: :unauthorized
     end
   end
 end
