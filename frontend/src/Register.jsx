@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
               </label>
               <Input
                 type="password"
-                placeholder="パスワードを入力"
+                placeholder="6文字以上で入力してください"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-2xl placeholder:text-slate-400"
