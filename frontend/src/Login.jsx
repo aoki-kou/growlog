@@ -16,7 +16,7 @@ const handleSubmit = async (e) => {
   setErrorMessage("");
 
   try {
-    const response = await fetch("http://localhost:3000/api/session", {
+    const response = await fetch("/api/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
