@@ -11,7 +11,7 @@ export function GoalsIndex() {
 
   const fetchGoals = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/goals", {
+      const response = await fetch("/api/goals", {
         credentials: "include",
       });
 
@@ -34,7 +34,7 @@ export function GoalsIndex() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/session", {
+      const response = await fetch("/api/session", {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -56,7 +56,7 @@ export function GoalsIndex() {
     if (!window.confirm("この目標を削除しますか？")) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/goals/${goalId}`, {
+      const response = await fetch(`/api/goals/${goalId}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",

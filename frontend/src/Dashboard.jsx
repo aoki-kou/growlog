@@ -14,7 +14,7 @@ export function Dashboard() {
 
   const fetchDashboard = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/dashboard", {
+      const response = await fetch("/api/dashboard", {
         credentials: "include",
       });
 
@@ -33,7 +33,7 @@ export function Dashboard() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/me", {
+      const response = await fetch("/api/me", {
         credentials: "include",
       });
 
@@ -66,7 +66,7 @@ export function Dashboard() {
     if (currentGoal?.today_checked || !currentGoal) return;
 
     try {
-      const response = await fetch("http://localhost:3000/api/checkins", {
+      const response = await fetch("/api/checkins", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/session", {
+      const response = await fetch("/api/session", {
         method: "DELETE",
         headers: {
           "Accept": "application/json",
