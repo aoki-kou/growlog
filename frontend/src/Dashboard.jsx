@@ -4,6 +4,8 @@ import { Button } from "./ui/button";
 import { DashboardTree } from "./DashboardTree";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export function Dashboard() {
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ export function Dashboard() {
 
   const fetchDashboard = async () => {
     try {
-      const response = await fetch("/api/dashboard", {
+      const response = await fetch(`${API_BASE_URL}/api/dashboard`, {
         credentials: "include",
       });
 
@@ -33,7 +35,7 @@ export function Dashboard() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("/api/me", {
+      const response = await fetch(`${API_BASE_URL}/api/me`, {
         credentials: "include",
       });
 
@@ -66,7 +68,7 @@ export function Dashboard() {
     if (currentGoal?.today_checked || !currentGoal) return;
 
     try {
-      const response = await fetch("/api/checkins", {
+      const response = await fetch(`${API_BASE_URL}/api/checkins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +91,7 @@ export function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/session", {
+      const response = await fetch(`${API_BASE_URL}/api/session`, {
         method: "DELETE",
         headers: {
           "Accept": "application/json",
