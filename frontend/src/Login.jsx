@@ -4,6 +4,8 @@ import { TreePine } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export function Login() {
   const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ const handleSubmit = async (e) => {
   setErrorMessage("");
 
   try {
-    const response = await fetch("/api/session", {
+    const response = await fetch(`${API_BASE_URL}/api/session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,11 +31,17 @@ const handleSubmit = async (e) => {
       }),
     });
 
-    const data = await response.json();
-
-    if (response.ok && data.success) {
+    if (response.ok) {
       navigate("/dashboard");
     } else {
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
+
       setErrorMessage(data.error || "ログインに失敗しました");
     }
   } catch (error) {
