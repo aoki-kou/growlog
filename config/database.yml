@@ -15,7 +15,7 @@ test:
   database: growlog_test
 
 production:
-  <<: *default
-  database: growlog_production
-  username: postgres
-  password: password
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV["DATABASE_URL"] %>
