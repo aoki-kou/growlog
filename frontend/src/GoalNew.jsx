@@ -4,6 +4,8 @@ import { TreePine } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export function GoalNew() {
   const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ export function GoalNew() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/goals", {
+      const response = await fetch(`${API_BASE_URL}/api/goals`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

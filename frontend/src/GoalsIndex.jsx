@@ -3,6 +3,8 @@ import { TreePine, Medal } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export function GoalsIndex() {
   const navigate = useNavigate();
 
@@ -11,7 +13,7 @@ export function GoalsIndex() {
 
   const fetchGoals = async () => {
     try {
-      const response = await fetch("/api/goals", {
+      const response = await fetch(`${API_BASE_URL}/api/goals`, {
         credentials: "include",
       });
 
@@ -34,7 +36,7 @@ export function GoalsIndex() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/session", {
+      const response = await fetch(`${API_BASE_URL}/api/session`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -56,7 +58,7 @@ export function GoalsIndex() {
     if (!window.confirm("この目標を削除しますか？")) return;
 
     try {
-      const response = await fetch(`/api/goals/${goalId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/goals/${goalId}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",

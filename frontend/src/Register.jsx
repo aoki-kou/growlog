@@ -4,6 +4,8 @@ import { TreePine } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 export function Register() {
   const navigate = useNavigate();
 
@@ -18,7 +20,7 @@ const handleSubmit = async (e) => {
   setErrorMessage("");
 
   try {
-    const response = await fetch("/api/users", {
+    const response = await fetch(`${API_BASE_URL}/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
