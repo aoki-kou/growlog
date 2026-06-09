@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { TreePine } from "lucide-react";
 import { Button } from "./ui/button";
+import { Header } from "./components/Header";
 import { Input } from "./ui/input";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -50,22 +50,13 @@ const handleSubmit = async (e) => {
 
   return (
     <div className="min-h-screen bg-[#eef0fb]">
-      <header className="border-b border-slate-200 bg-white/80">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 py-4">
-          <Link to="/" className="flex items-center gap-3">
-            <TreePine className="h-9 w-9 text-green-600" />
-            <h1 className="text-2xl font-semibold text-gray-900">GrowLog</h1>
-          </Link>
-
-          <div className="flex items-center gap-4">
-            <Link to="/login">
-              <Button variant="ghost" className="text-lg">
-                ログイン
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header>
+        <Link to="/login">
+          <Button variant="ghost" className="text-xl">
+            ログイン
+          </Button>
+        </Link>
+      </Header>
 
       <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-8 py-10">
         <div className="w-full max-w-[570px] rounded-[28px] border border-slate-200 bg-white px-6 py-8 shadow-sm">
@@ -148,6 +139,10 @@ const handleSubmit = async (e) => {
             <Link to="/login" className="font-medium text-slate-900 hover:underline">
               ログイン
             </Link>
+          </div>
+          <div className="mt-8 text-center text-xs text-slate-400 space-x-4">
+            <Link to="/privacy-policy">プライバシーポリシー  </Link>
+            <Link to="/terms">利用規約</Link>
           </div>
         </div>
       </main>
