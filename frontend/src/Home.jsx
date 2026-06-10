@@ -44,12 +44,9 @@ export function Home() {
               </Button>
             </Link>
 
-            <Link to="/tracker">
-              <Button
-                variant="outline"
-                className="rounded-2xl border border-gray-300 bg-[#f7f3f3] px-10 py-8 text-[32px] text-gray-900 hover:bg-gray-100"
-              >
-                トラッカーを見る
+            <Link to="/how-to-use">
+              <Button variant="ghost" className="text-xl">
+                使い方
               </Button>
             </Link>
           </div>

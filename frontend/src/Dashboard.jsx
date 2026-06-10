@@ -166,36 +166,27 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#dff0e7]">
-      <header className="border-b border-emerald-200 bg-white/90">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 py-4">
-          <Link to="/" className="flex items-center gap-3">
-            <TreePine className="h-9 w-9 text-green-600" />
-            <h1 className="text-2xl font-semibold text-gray-900">Growlog</h1>
-          </Link>
+      <Header>
+        <Link to="/goals/new">
+          <Button className="rounded-xl bg-[#02021f] px-5 py-2 text-base text-white hover:bg-[#111138]">
+            目標登録
+          </Button>
+        </Link>
 
-          <div className="flex items-center gap-4">
-            <Link to="/goals/new">
-              <Button className="rounded-xl bg-[#02021f] px-5 py-2 text-base text-white hover:bg-[#111138]">
-                目標登録
-              </Button>
-            </Link>
+        <Link to="/goals">
+          <Button variant="ghost" className="text-base text-slate-900">
+            目標一覧
+          </Button>
+        </Link>
 
-            <Link to="/goals">
-              <Button variant="ghost" className="text-base text-slate-900">
-                目標一覧
-              </Button>
-            </Link>
-
-            <Button 
-              onClick={handleLogout}
-              variant="ghost"
-              className="text-base text-slate-900"
-            >
-              ログアウト
-            </Button>
-          </div>
-        </div>
-      </header>
+        <Button
+          onClick={handleLogout}
+          variant="ghost"
+          className="text-base text-slate-900"
+        >
+          ログアウト
+        </Button>
+      </Header>
 
       <main className="mx-auto max-w-[1400px] px-6 py-8">
         <div className="mb-8 flex items-center justify-center gap-3 text-[22px] font-medium text-slate-900">
