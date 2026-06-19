@@ -42,6 +42,28 @@ export function GoalNew() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/session`, {
+        method: "DELETE",
+        headers: {
+          "Accept": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        navigate("/login");
+      } else {
+        console.error(data.error || "ログアウトに失敗しました");
+      }
+    } catch (error) {
+      console.error("ログアウトに失敗しました", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#dff0e7]">
       <Header>
