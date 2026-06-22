@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Medal } from "lucide-react";
 import { Button } from "./ui/button";
 import { Header } from "./components/Header";
+import { FlashMessage } from "./components/FlashMessage";
+import { useLocation } from "react-router-dom";
 import { DashboardTree } from "./DashboardTree";
 import { useEffect, useState } from "react";
 
@@ -14,6 +16,8 @@ export function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentGoal = goals[currentIndex];
+  const location = useLocation();
+  const flashMessage = location.state?.flashMessage;
 
   const fetchDashboard = async () => {
     try {
@@ -87,6 +91,8 @@ export function Dashboard() {
       }
     } catch (error) {
       console.error("checkinの作成に失敗しました", error);
+    } finally {
+    setLoading(false);
     }
   };
 
@@ -136,27 +142,31 @@ export function Dashboard() {
           </Button>
         </Header>
 
-        <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-8 py-12">
-          <div className="w-full max-w-[720px] rounded-[28px] border border-slate-200 bg-white/90 px-10 py-12 text-center shadow-sm">
-            <div className="mx-auto mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-green-100">
-              <span className="text-5xl">🌱</span>
-            </div>
+        <main className="mx-auto min-h-[calc(100vh-81px)] max-w-[1400px] px-8 py-12">
+          <FlashMessage message={flashMessage} />
+          
+          <div className="flex min-h-[calc(100vh-160px)] items-center justify-center">
+            <div className="w-full max-w-[720px] rounded-[28px] border border-slate-200 bg-white/90 px-10 py-12 text-center shadow-sm">
+              <div className="mx-auto mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-green-100">
+                <span className="text-5xl">🌱</span>
+              </div>
 
-            <h2 className="text-4xl font-semibold text-green-800">
-              まだ目標がありません
-            </h2>
+              <h2 className="text-4xl font-semibold text-green-800">
+                まだ目標がありません
+              </h2>
 
-            <p className="mx-auto mt-4 max-w-[520px] text-lg leading-relaxed text-slate-600">
-              最初の目標を登録すると、あなたの木が育ち始めます。
-              小さな一歩から、GrowLogを始めましょう。
-            </p>
+              <p className="mx-auto mt-4 max-w-[520px] text-lg leading-relaxed text-slate-600">
+                最初の目標を登録すると、あなたの木が育ち始めます。
+                小さな一歩から、GrowLogを始めましょう。
+              </p>
 
-            <div className="mt-8">
-              <Link to="/goals/new">
-                <Button className="rounded-2xl bg-[#02021f] px-10 py-6 text-xl text-white hover:bg-[#111138]">
-                  目標を登録する
-                </Button>
-              </Link>
+              <div className="mt-8">
+                <Link to="/goals/new">
+                  <Button className="rounded-2xl bg-[#02021f] px-10 py-6 text-xl text-white hover:bg-[#111138]">
+                    目標を登録する
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </main>
@@ -189,6 +199,7 @@ export function Dashboard() {
       </Header>
 
       <main className="mx-auto max-w-[1400px] px-6 py-8">
+        <FlashMessage message={flashMessage} />
         <div className="mb-8 flex items-center justify-center gap-3 text-[22px] font-medium text-slate-900">
           <Medal className="h-7 w-7 text-amber-500" />
           <span>達成回数: {currentGoal.checkin_count}回</span>
@@ -238,9 +249,13 @@ export function Dashboard() {
             ) : (
               <button
                 onClick={handleCheck}
+                disabled={loading}
                 className="rounded-2xl bg-green-600 px-14 py-6 text-[26px] text-white hover:bg-green-700"
               >
-                達成
+              {loading && (
+                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              )}
+              {loading ? "水やり中..." : "達成"}
               </button>
             )}
           </div>

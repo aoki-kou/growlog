@@ -12,10 +12,12 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
   setErrorMessage("");
+  setLoading(true);
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/session`, {
@@ -32,7 +34,11 @@ const handleSubmit = async (e) => {
     });
 
     if (response.ok) {
-      navigate("/dashboard");
+      navigate("/dashboard", {
+        state: {
+          flashMessage: "ログインできました",
+        },
+      });
     } else {
       let data = {};
 
@@ -47,6 +53,8 @@ const handleSubmit = async (e) => {
   } catch (error) {
     console.error("ログインに失敗しました", error);
     setErrorMessage("ログインに失敗しました");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -106,9 +114,13 @@ const handleSubmit = async (e) => {
 
             <Button
               type="submit"
+              disabled={loading}
               className="w-full rounded-2xl bg-[#02021f] py-6 text-2xl text-white hover:bg-[#111138]"
             >
-              ログイン
+              {loading && (
+                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              )}
+              {loading ? "ログイン中..." : "ログイン"}
             </Button>
           </form>
 

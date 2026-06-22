@@ -45,7 +45,7 @@ export function Home() {
             </Link>
 
             <Link to="/how-to-use">
-              <Button variant="ghost" className="text-xl">
+              <Button variant="ghost" className="rounded-2xl bg-[#02021f] px-10 py-8 text-[32px] text-black hover:bg-[#111138]">
                 使い方
               </Button>
             </Link>

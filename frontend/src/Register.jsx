@@ -14,10 +14,12 @@ export function Register() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
   setErrorMessage("");
+  setLoading(true);
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/users`, {
@@ -38,13 +40,19 @@ const handleSubmit = async (e) => {
     const data = await response.json();
 
     if (response.ok && data.success) {
-      navigate("/dashboard");
+      navigate("/dashboard", {
+        state: {
+          FlashMessage: "登録できました",
+        },
+      });
     } else {
       setErrorMessage(data.error || "ユーザー登録に失敗しました");
     }
   } catch (error) {
     console.error("ユーザー登録に失敗しました", error);
     setErrorMessage("ユーザー登録に失敗しました");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -128,9 +136,13 @@ const handleSubmit = async (e) => {
 
             <Button
               type="submit"
+              disabled={loading}
               className="mt-2 h-16 w-full rounded-2xl bg-[#02021f] text-xl font-medium text-white hover:bg-[#111138]"
             >
-              登録
+              {loading && (
+                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              )}
+              {loading ? "ユーザー登録中..." : "登録"}
             </Button>
           </form>
 
