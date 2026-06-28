@@ -63,3 +63,7 @@ gem "rails-i18n", "~> 7.0.0"
 gem "rack-cors"
 
 gem "rspec-rails", "~> 8.0", groups: [ :development, :test ]
+
+gem "omniauth-google-oauth2", "~> 1.2"
+
+gem "omniauth-rails_csrf_protection", "~> 2.0"

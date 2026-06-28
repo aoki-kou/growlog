@@ -58,6 +58,10 @@ const handleSubmit = async (e) => {
   }
 };
 
+const handleGoogleLogin = () => {
+  window.location.href = `${API_BASE_URL}/auth/google_oauth2/start`;
+};
+
   return (
     <div className="min-h-screen bg-[#dff0e7]">
       <Header>
@@ -121,6 +125,13 @@ const handleSubmit = async (e) => {
                 <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
               )}
               {loading ? "ログイン中..." : "ログイン"}
+            </Button>
+            <Button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="mt-4 w-full rounded-2xl border border-slate-300 bg-white py-6 text-xl font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow"
+            >
+              Googleでログイン
             </Button>
           </form>
 
