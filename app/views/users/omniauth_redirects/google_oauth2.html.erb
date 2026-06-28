@@ -1,0 +1,6 @@
+<%= form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, local: true, data: { turbo: false }, id: "google-oauth-form" do %>
+<% end %>
+
+<script>
+  document.getElementById("google-oauth-form").submit();
+</script>
