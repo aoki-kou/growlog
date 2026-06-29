@@ -8,6 +8,7 @@ import { GoalsIndex } from "./GoalsIndex";
 import Terms from "./pages/Terms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import HowToUse from "./pages/HowToUse";
+import { Calendar } from "./Calendar";
 
 function Tracker() {
   return <div className="p-8 text-3xl">トラッカー画面</div>;
@@ -28,6 +29,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/how-to-use" element={<HowToUse />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </BrowserRouter>
   );

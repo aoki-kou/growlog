@@ -189,6 +189,14 @@ export function Dashboard() {
           </Button>
         </Link>
 
+        <Link to ="/calendar">
+          <Button
+            variant="outline"
+            className="rounded-xl border-slate-300 px-6 py-5 text-lg hover:bg-slate-50">
+            カレンダー
+          </Button>
+        </Link>
+
         <Button
           onClick={handleLogout}
           variant="ghost"
