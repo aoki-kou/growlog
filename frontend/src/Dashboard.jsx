@@ -6,6 +6,7 @@ import { FlashMessage } from "./components/FlashMessage";
 import { useLocation } from "react-router-dom";
 import { DashboardTree } from "./DashboardTree";
 import { useEffect, useState } from "react";
+import { Calendar } from "lucide-react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -190,11 +191,12 @@ export function Dashboard() {
         </Link>
 
         <Link to ="/calendar">
-          <Button
-            variant="outline"
-            className="rounded-xl border-slate-300 px-6 py-5 text-lg hover:bg-slate-50">
-            カレンダー
-          </Button>
+        <Button
+          className="flex items-center gap-2 rounded-xl bg-green-700 px-5 py-2 text-white hover:bg-green-800"
+        >
+          カレンダー
+          <Calendar className="h-5 w-5" />
+        </Button>
         </Link>
 
         <Button
