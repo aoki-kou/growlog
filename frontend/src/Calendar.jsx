@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Header } from "./components/Header";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
 const weekDays = ["日", "月", "火", "水", "木", "金", "土"];
 
-// 仮データ（API実装時に置き換える）
-const checkedDays = [2, 5, 6, 10, 14, 18, 19, 23, 27];
-
 export function Calendar() {
-  // 現在表示している年月
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [checkedDates, setCheckedDates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // 表示用の年・月
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
-  // 今月の日数
-  const daysInMonth = new Date(year, month, 0).getDate();
 
-  const firstdayOfWeek = new Date(year, month -1, 1).getDay();
+  const previousMonth = () => {
+    setCurrentDate(new Date(year, month - 2, 1));
+  };
+
+  const nextMonth = () => {
+    setCurrentDate(new Date(year, month, 1));
+  };
+
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const firstDayOfWeek = new Date(year, month - 1, 1).getDay();
 
   const calendarDays = Array.from(
     { length: daysInMonth },
@@ -26,11 +33,36 @@ export function Calendar() {
   );
 
   const blankDays = Array.from(
-    { length: firstdayOfWeek },
+    { length: firstDayOfWeek },
     () => null
   );
 
   const displayDays = [...blankDays, ...calendarDays];
+
+  useEffect(() => {
+    const fetchCalendar = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/calendar`, {
+          credentials: "include",
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setCheckedDates(data.checked_dates || []);
+        } else {
+          setErrorMessage(data.error || "カレンダー情報の取得に失敗しました");
+        }
+      } catch (error) {
+        console.error("カレンダー情報の取得に失敗しました", error);
+        setErrorMessage("カレンダー情報の取得に失敗しました");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCalendar();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#dff0e7]">
@@ -57,11 +89,19 @@ export function Calendar() {
           </p>
         </section>
 
+        {loading && (
+          <p className="mb-4 text-center text-slate-500">読み込み中...</p>
+        )}
+
+        {errorMessage && (
+          <p className="mb-4 text-center text-red-600">{errorMessage}</p>
+        )}
+
         <section className="rounded-[32px] border border-green-100 bg-white/90 p-6 shadow-sm">
           <div className="mb-6 flex items-center justify-between">
-
-            {/* 次のブランチで機能追加 */}
             <button
+              type="button"
+              onClick={previousMonth}
               className="rounded-full bg-green-50 px-4 py-2 text-xl text-green-800 hover:bg-green-100"
             >
               ◀
@@ -71,13 +111,13 @@ export function Calendar() {
               {year}年{month}月
             </h2>
 
-            {/* 次のブランチで機能追加 */}
             <button
+              type="button"
+              onClick={nextMonth}
               className="rounded-full bg-green-50 px-4 py-2 text-xl text-green-800 hover:bg-green-100"
             >
               ▶
             </button>
-
           </div>
 
           <div className="grid grid-cols-7 gap-3 text-center">
@@ -100,7 +140,12 @@ export function Calendar() {
                 );
               }
 
-              const checked = checkedDays.includes(day);
+              const dateString = `${year}-${String(month).padStart(
+                2,
+                "0"
+              )}-${String(day).padStart(2, "0")}`;
+
+              const checked = checkedDates.includes(dateString);
 
               return (
                 <div
@@ -124,7 +169,7 @@ export function Calendar() {
           <div className="rounded-2xl bg-white/80 p-5 text-center shadow-sm">
             <p className="text-sm text-slate-500">今月の達成日数</p>
             <p className="mt-2 text-3xl font-semibold text-green-800">
-              9日
+              {checkedDates.length}日
             </p>
           </div>
 
