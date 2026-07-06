@@ -41,10 +41,16 @@ export function Calendar() {
 
   useEffect(() => {
     const fetchCalendar = async () => {
+      setLoading(true);
+      setErrorMessage("");
+      
       try {
-        const response = await fetch(`${API_BASE_URL}/api/calendar`, {
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${API_BASE_URL}/api/calendar?year=${year}&month=${month}`,
+          {
+            credentials: "include",
+          }
+        );
 
         const data = await response.json();
 
@@ -62,7 +68,7 @@ export function Calendar() {
     };
 
     fetchCalendar();
-  }, []);
+  }, [year, month]);
 
   return (
     <div className="min-h-screen bg-[#dff0e7]">
