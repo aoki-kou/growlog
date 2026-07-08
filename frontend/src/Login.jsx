@@ -66,30 +66,32 @@ const handleGoogleLogin = () => {
     <div className="min-h-screen bg-[#dff0e7]">
       <Header>
         <Link to="/login">
-          <Button variant="ghost" className="text-xl">
+          <Button variant="ghost" className="text-sm sm:text-xl">
             ログイン
           </Button>
         </Link>
 
         <Link to="/register">
-          <Button className="rounded-xl bg-[#02021f] px-5 py-2 text-base text-white hover:bg-[#111138]">
+          <Button className="rounded-xl bg-[#02021f] px-3 py-2 text-sm text-white hover:bg-[#111138] sm:px-5 sm:text-base">
             新規登録
           </Button>
         </Link>
       </Header>
 
-      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-8 py-16">
-        <div className="w-full max-w-[520px] rounded-3xl bg-white p-10 shadow-sm">
-          <div className="mb-8 text-center">
-            <h2 className="text-4xl font-semibold text-green-800">ログイン</h2>
-            <p className="mt-3 text-lg text-slate-600">
+      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-4 py-10 sm:px-8 sm:py-16">
+        <div className="mx-auto w-full max-w-[430px] rounded-3xl bg-white p-6 shadow-sm sm:max-w-[520px] sm:p-10">
+          <div className="mb-6 text-center sm:mb-8">
+            <h2 className="text-3xl font-semibold text-green-800 sm:text-4xl">
+              ログイン
+            </h2>
+            <p className="mt-3 text-base text-slate-600 sm:text-lg">
               GrowLogへようこそ
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="mb-2 block text-lg font-medium text-slate-700">
+              <label className="mb-2 block text-base font-medium text-slate-700 sm:text-lg">
                 メールアドレス
               </label>
               <Input
@@ -101,7 +103,7 @@ const handleGoogleLogin = () => {
             </div>
 
             <div>
-              <label className="mb-2 block text-lg font-medium text-slate-700">
+              <label className="mb-2 block text-base font-medium text-slate-700 sm:text-lg">
                 パスワード
               </label>
               <Input
@@ -119,23 +121,24 @@ const handleGoogleLogin = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full rounded-2xl bg-[#02021f] py-6 text-2xl text-white hover:bg-[#111138]"
+              className="w-full rounded-2xl bg-[#02021f] py-5 text-xl text-white hover:bg-[#111138] sm:py-6 sm:text-2xl"
             >
               {loading && (
                 <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
               )}
               {loading ? "ログイン中..." : "ログイン"}
             </Button>
+
             <Button
               type="button"
               onClick={handleGoogleLogin}
-              className="mt-4 w-full rounded-2xl border border-slate-300 bg-white py-6 text-xl font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow"
+              className="mt-4 w-full rounded-2xl border border-slate-300 bg-white py-5 text-base font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow sm:py-6 sm:text-xl"
             >
               Googleでログイン
             </Button>
           </form>
 
-          <div className="mt-8 text-center text-lg text-slate-600">
+          <div className="mt-6 text-center text-base text-slate-600 sm:mt-8 sm:text-lg">
             アカウントをお持ちでない方は{" "}
             <Link
               to="/register"
@@ -144,8 +147,9 @@ const handleGoogleLogin = () => {
               新規登録
             </Link>
           </div>
-          <div className="mt-8 text-center text-xs text-slate-400 space-x-4">
-            <Link to="/privacy-policy">プライバシーポリシー  </Link>
+
+          <div className="mt-6 flex flex-col items-center gap-2 text-center text-xs text-slate-400 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
+            <Link to="/privacy-policy">プライバシーポリシー</Link>
             <Link to="/terms">利用規約</Link>
           </div>
         </div>

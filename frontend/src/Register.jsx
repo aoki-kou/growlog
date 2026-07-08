@@ -65,26 +65,26 @@ const handleGoogleLogin = () => {
     <div className="min-h-screen bg-[#eef0fb]">
       <Header>
         <Link to="/login">
-          <Button variant="ghost" className="text-xl">
+          <Button variant="ghost" className="text-sm sm:text-xl">
             ログイン
           </Button>
         </Link>
       </Header>
 
-      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-8 py-10">
-        <div className="w-full max-w-[570px] rounded-[28px] border border-slate-200 bg-white px-6 py-8 shadow-sm">
-          <div className="mb-8 text-center">
-            <h2 className="text-4xl font-semibold text-slate-900">
+      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-4 py-10 sm:px-8 sm:py-16">
+        <div className="mx-auto w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:max-w-[570px] sm:p-10">
+          <div className="mb-6 text-center sm:mb-8">
+            <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
               アカウント登録
             </h2>
-            <p className="mt-4 text-base text-slate-500">
+            <p className="mt-3 text-sm text-slate-500 sm:mt-4 sm:text-base">
               新しいアカウントを作成してください
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="mb-2 block text-xl font-medium text-slate-900">
+              <label className="mb-2 block text-base font-medium text-slate-900 sm:text-xl">
                 名前
               </label>
               <Input
@@ -92,12 +92,12 @@ const handleGoogleLogin = () => {
                 placeholder="山田太郎"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-2xl placeholder:text-slate-400"
+                className="h-14 rounded-2xl border-0 bg-slate-100 px-4 text-lg placeholder:text-slate-400 sm:h-16 sm:px-5 sm:text-2xl"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xl font-medium text-slate-900">
+              <label className="mb-2 block text-base font-medium text-slate-900 sm:text-xl">
                 メールアドレス
               </label>
               <Input
@@ -105,12 +105,12 @@ const handleGoogleLogin = () => {
                 placeholder="example@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-2xl placeholder:text-slate-400"
+                className="h-14 rounded-2xl border-0 bg-slate-100 px-4 text-lg placeholder:text-slate-400 sm:h-16 sm:px-5 sm:text-2xl"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xl font-medium text-slate-900">
+              <label className="mb-2 block text-base font-medium text-slate-900 sm:text-xl">
                 パスワード
               </label>
               <Input
@@ -118,12 +118,12 @@ const handleGoogleLogin = () => {
                 placeholder="6文字以上で入力してください"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-2xl placeholder:text-slate-400"
+                className="h-14 rounded-2xl border-0 bg-slate-100 px-4 text-lg placeholder:text-slate-400 sm:h-16 sm:px-5 sm:text-2xl"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xl font-medium text-slate-900">
+              <label className="mb-2 block text-base font-medium text-slate-900 sm:text-xl">
                 パスワード（確認）
               </label>
               <Input
@@ -131,7 +131,7 @@ const handleGoogleLogin = () => {
                 placeholder="もう一度パスワードを入力"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
-                className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-2xl placeholder:text-slate-400"
+                className="h-14 rounded-2xl border-0 bg-slate-100 px-4 text-lg placeholder:text-slate-400 sm:h-16 sm:px-5 sm:text-2xl"
               />
             </div>
 
@@ -142,7 +142,7 @@ const handleGoogleLogin = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="mt-2 h-16 w-full rounded-2xl bg-[#02021f] text-xl font-medium text-white hover:bg-[#111138]"
+              className="mt-2 h-14 w-full rounded-2xl bg-[#02021f] text-lg font-medium text-white hover:bg-[#111138] sm:h-16 sm:text-xl"
             >
               {loading && (
                 <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
@@ -153,20 +153,24 @@ const handleGoogleLogin = () => {
             <Button
               type="button"
               onClick={handleGoogleLogin}
-              className="mt-4 w-full rounded-2xl border border-slate-300 bg-white py-6 text-xl font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow"
+              className="mt-4 h-14 w-full rounded-2xl border border-slate-300 bg-white text-base font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:shadow sm:h-16 sm:text-xl"
             >
               Googleでログイン
             </Button>
           </form>
 
-          <div className="mt-8 text-center text-xl text-slate-500">
+          <div className="mt-6 text-center text-base text-slate-500 sm:mt-8 sm:text-xl">
             既にアカウントをお持ちですか？{" "}
-            <Link to="/login" className="font-medium text-slate-900 hover:underline">
+            <Link
+              to="/login"
+              className="font-medium text-slate-900 hover:underline"
+            >
               ログイン
             </Link>
           </div>
-          <div className="mt-8 text-center text-xs text-slate-400 space-x-4">
-            <Link to="/privacy-policy">プライバシーポリシー  </Link>
+
+          <div className="mt-6 flex flex-col items-center gap-2 text-center text-xs text-slate-400 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
+            <Link to="/privacy-policy">プライバシーポリシー</Link>
             <Link to="/terms">利用規約</Link>
           </div>
         </div>

@@ -80,17 +80,17 @@ export function Calendar() {
         </Link>
       </Header>
 
-      <main className="mx-auto max-w-[1100px] px-6 py-10">
+      <main className="mx-auto max-w-[1100px] px-3 py-6 sm:px-6 sm:py-10">
         <section className="mb-8 text-center">
           <p className="text-lg font-medium text-green-700">
             Effort Calendar
           </p>
 
-          <h1 className="mt-2 text-4xl font-semibold text-green-900">
+          <h1 className="mt-2 text-3xl font-semibold text-green-900 sm:text-4xl">
             努力の記録
           </h1>
 
-          <p className="mx-auto mt-4 max-w-[620px] text-lg leading-relaxed text-slate-600">
+          <p className="mx-auto mt-4 max-w-[620px] text-base leading-relaxed text-slate-600 sm:text-lg">
             水やりした日をカレンダーで振り返れます。
           </p>
         </section>
@@ -103,30 +103,30 @@ export function Calendar() {
           <p className="mb-4 text-center text-red-600">{errorMessage}</p>
         )}
 
-        <section className="rounded-[32px] border border-green-100 bg-white/90 p-6 shadow-sm">
+        <section className="rounded-2xl border border-green-100 bg-white/90 p-3 shadow-sm sm:rounded-[32px] sm:p-6">
           <div className="mb-6 flex items-center justify-between">
             <button
               type="button"
               onClick={previousMonth}
-              className="rounded-full bg-green-50 px-4 py-2 text-xl text-green-800 hover:bg-green-100"
+              className="rounded-full bg-green-50 px-3 py-2 text-base text-green-800 hover:bg-green-100 sm:px-4 sm:text-xl"
             >
               ◀
             </button>
 
-            <h2 className="text-3xl font-semibold text-slate-900">
+            <h2 className="text-xl font-semibold text-slate-900 sm:text-3xl">
               {year}年{month}月
             </h2>
 
             <button
               type="button"
               onClick={nextMonth}
-              className="rounded-full bg-green-50 px-4 py-2 text-xl text-green-800 hover:bg-green-100"
+              className="rounded-full bg-green-50 px-3 py-2 text-base text-green-800 hover:bg-green-100 sm:px-4 sm:text-xl"
             >
               ▶
             </button>
           </div>
 
-          <div className="grid grid-cols-7 gap-3 text-center">
+          <div className="grid grid-cols-7 gap-1 text-center sm:gap-3">
             {weekDays.map((day) => (
               <div
                 key={day}
@@ -141,7 +141,7 @@ export function Calendar() {
                 return (
                   <div
                     key={`blank-${index}`}
-                    className="min-h-[92px] rounded-2xl"
+                    className="min-h-[54px] rounded-xl sm:min-h-[72px] sm:rounded-2xl md:min-h-[92px]"
                   />
                 );
               }
@@ -156,7 +156,7 @@ export function Calendar() {
               return (
                 <div
                   key={day}
-                  className={`flex min-h-[92px] flex-col items-center justify-center rounded-2xl border text-lg transition ${
+                  className={`flex min-h-[54px] flex-col items-center justify-center rounded-xl border text-sm transition sm:min-h-[72px] sm:rounded-2xl sm:text-base md:min-h-[92px] md:text-lg ${
                     checked
                       ? "border-green-300 bg-green-100 text-green-900"
                       : "border-slate-100 bg-slate-50 text-slate-400"
@@ -164,31 +164,37 @@ export function Calendar() {
                 >
                   <span className="font-medium">{day}</span>
 
-                  {checked && <span className="mt-2 text-2xl">🌱</span>}
+                  {checked && <span className="mt-1 text-lg sm:mt-2 sm:text-2xl">🌱</span>}
                 </div>
               );
             })}
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl bg-white/80 p-5 text-center shadow-sm">
-            <p className="text-sm text-slate-500">今月の達成日数</p>
-            <p className="mt-2 text-3xl font-semibold text-green-800">
+        <section className="mt-6 grid grid-cols-3 gap-2 sm:gap-4">
+          <div className="rounded-xl bg-white/80 p-3 text-center shadow-sm sm:rounded-2xl sm:p-5">
+            <p className="text-[10px] text-slate-500 sm:text-sm">
+              今月の達成日数
+            </p>
+            <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
               {checkedDates.length}日
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/80 p-5 text-center shadow-sm">
-            <p className="text-sm text-slate-500">連続記録</p>
-            <p className="mt-2 text-3xl font-semibold text-green-800">
+          <div className="rounded-xl bg-white/80 p-3 text-center shadow-sm sm:rounded-2xl sm:p-5">
+            <p className="text-[10px] text-slate-500 sm:text-sm">
+              連続記録
+            </p>
+            <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
               2日
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/80 p-5 text-center shadow-sm">
-            <p className="text-sm text-slate-500">連続努力達成回数</p>
-            <p className="mt-2 text-3xl font-semibold text-green-800">
+          <div className="rounded-xl bg-white/80 p-3 text-center shadow-sm sm:rounded-2xl sm:p-5">
+            <p className="text-[10px] text-slate-500 sm:text-sm">
+              努力回数
+            </p>
+            <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
               2回
             </p>
           </div>
