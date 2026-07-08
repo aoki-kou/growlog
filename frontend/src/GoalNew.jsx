@@ -68,7 +68,7 @@ export function GoalNew() {
     <div className="min-h-screen bg-[#dff0e7]">
       <Header>
         <Link to="/dashboard">
-          <Button variant="ghost" className="text-base text-slate-900">
+          <Button variant="ghost" className="text-sm text-slate-900 sm:text-base">
             Top
           </Button>
         </Link>
@@ -76,26 +76,26 @@ export function GoalNew() {
         <Button
           onClick={handleLogout}
           variant="ghost"
-          className="text-base text-slate-900"
+          className="text-sm text-slate-900 sm:text-base"
         >
           ログアウト
         </Button>
       </Header>
 
-      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-8 py-10">
-        <div className="w-full max-w-[620px] rounded-[28px] border border-slate-200 bg-white px-8 py-10 shadow-sm">
-          <div className="mb-8 text-center">
-            <h2 className="text-4xl font-semibold text-slate-900">
+      <main className="mx-auto flex min-h-[calc(100vh-81px)] max-w-[1400px] items-center justify-center px-4 py-10 sm:px-8 sm:py-16">
+        <div className="mx-auto w-full max-w-[430px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:max-w-[620px] sm:p-10">
+          <div className="mb-6 text-center sm:mb-8">
+            <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
               目標登録
             </h2>
-            <p className="mt-4 text-base text-slate-500">
+            <p className="mt-3 text-sm text-slate-500 sm:mt-4 sm:text-base">
               育てたい目標をひとつ決めましょう
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="mb-2 block text-xl font-medium text-slate-900">
+              <label className="mb-2 block text-base font-medium text-slate-900 sm:text-xl">
                 目標
               </label>
               <Input
@@ -103,12 +103,12 @@ export function GoalNew() {
                 placeholder="例: 毎日15分散歩する"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="h-16 rounded-2xl border-0 bg-slate-100 px-5 text-xl placeholder:text-slate-400"
+                className="h-14 rounded-2xl border-0 bg-slate-100 px-4 text-base placeholder:text-slate-400 sm:h-16 sm:px-5 sm:text-xl"
               />
             </div>
 
-            <div className="rounded-2xl bg-green-50 px-5 py-4 text-slate-600">
-              <p className="text-sm leading-relaxed">
+            <div className="rounded-2xl bg-green-50 px-4 py-4 text-slate-600 sm:px-5">
+              <p className="text-xs leading-relaxed sm:text-sm">
                 小さく続けやすい目標がおすすめです。
                 たとえば「毎日筋トレ」よりも「毎日腕立てを5回する」のように、
                 具体的で始めやすい形にすると続けやすくなります。
@@ -121,7 +121,7 @@ export function GoalNew() {
 
             <Button
               type="submit"
-              className="mt-2 h-16 w-full rounded-2xl bg-[#02021f] text-xl font-medium text-white hover:bg-[#111138]"
+              className="mt-2 h-14 w-full rounded-2xl bg-[#02021f] text-lg font-medium text-white hover:bg-[#111138] sm:h-16 sm:text-xl"
             >
               登録する
             </Button>
