@@ -217,38 +217,55 @@ export function Dashboard() {
           <span>達成回数: {currentGoal.checkin_count}回</span>
         </div>
 
-        <div className="mx-auto max-w-[440px] rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm sm:max-w-[760px] sm:px-8 sm:py-8">
+      <div className="mx-auto flex max-w-[440px] flex-col gap-5 sm:max-w-[760px] sm:gap-6">
+        {/* 目標名を表示する枠 */}
+        <section className="rounded-3xl border border-slate-200 bg-white/90 px-4 py-5 shadow-sm sm:px-8 sm:py-6">
           <div className="flex items-center justify-center gap-3 sm:gap-6">
             <button
-              onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+              type="button"
+              onClick={() =>
+                setCurrentIndex((prev) => Math.max(prev - 1, 0))
+              }
               disabled={currentIndex === 0}
-              className="text-2xl text-slate-500 hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
+              className="shrink-0 text-2xl text-slate-500 transition hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
+              aria-label="前の目標を表示"
             >
               ◀
             </button>
 
-            <h2 className="text-center text-2xl font-medium text-green-700 sm:text-4xl">
+            <h2 className="min-w-0 flex-1 break-words text-center text-2xl font-medium text-green-700 sm:text-4xl">
               {currentGoal.title}
             </h2>
 
             <button
+              type="button"
               onClick={() =>
-                setCurrentIndex((prev) => Math.min(prev + 1, goals.length - 1))
+                setCurrentIndex((prev) =>
+                  Math.min(prev + 1, goals.length - 1)
+                )
               }
               disabled={currentIndex === goals.length - 1}
-              className="text-2xl text-slate-500 hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
+              className="shrink-0 text-2xl text-slate-500 transition hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
+              aria-label="次の目標を表示"
             >
               ▶
             </button>
           </div>
+        </section>
 
-          <div className="mt-6 flex justify-center sm:mt-8">
+        {/* 木を表示する枠 */}
+        <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-4 shadow-sm sm:p-6">
+          <div className="flex justify-center">
             <DashboardTree count={currentGoal.checkin_count} />
           </div>
+        </section>
 
-          <div className="mt-6 flex justify-center sm:mt-8">
+        {/* 達成ボタンと説明文を表示する枠 */}
+        <section className="rounded-3xl border border-slate-200 bg-white/90 px-5 py-6 text-center shadow-sm sm:px-8 sm:py-8">
+          <div className="flex justify-center">
             {currentGoal.today_checked ? (
               <button
+                type="button"
                 className="cursor-not-allowed rounded-2xl bg-gray-400 px-8 py-5 text-xl text-white sm:px-14 sm:py-6 sm:text-[26px]"
                 disabled
               >
@@ -256,22 +273,25 @@ export function Dashboard() {
               </button>
             ) : (
               <button
+                type="button"
                 onClick={handleCheck}
                 disabled={loading}
-                className="rounded-2xl bg-green-600 px-10 py-5 text-xl text-white hover:bg-green-700 sm:px-14 sm:py-6 sm:text-[26px]"
+                className="rounded-2xl bg-green-600 px-10 py-5 text-xl text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 sm:px-14 sm:py-6 sm:text-[26px]"
               >
                 {loading && (
                   <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                 )}
+
                 {loading ? "水やり中..." : "達成"}
               </button>
             )}
           </div>
 
-          <p className="mt-5 text-center text-base text-slate-600 sm:mt-6 sm:text-xl">
+          <p className="mt-5 text-base text-slate-600 sm:mt-6 sm:text-xl">
             継続することで、あなたの木が成長します
           </p>
-        </div>
+        </section>
+      </div>
       </main>
     </div>
   );
