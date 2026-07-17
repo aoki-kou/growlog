@@ -1,12 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Medal } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { Calendar } from "lucide-react";
 import { Button } from "./ui/button";
 import { Header } from "./components/Header";
 import { FlashMessage } from "./components/FlashMessage";
-import { useLocation } from "react-router-dom";
-import { DashboardTree } from "./DashboardTree";
-import { useEffect, useState } from "react";
-import { Calendar } from "lucide-react";
+import {
+  DashboardTree,
+  getTreeProgress,
+} from "./DashboardTree";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -72,6 +77,8 @@ export function Dashboard() {
 
   const handleCheck = async () => {
     if (currentGoal?.today_checked || !currentGoal) return;
+
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/checkins`, {
@@ -175,6 +182,12 @@ export function Dashboard() {
     );
   }
 
+  const {
+    nextStage,
+    remainingCount,
+    progressPercent,
+  } = getTreeProgress(currentGoal.checkin_count);
+
   return (
     <div className="min-h-screen bg-[#dff0e7]">
       <Header>
@@ -212,86 +225,196 @@ export function Dashboard() {
       <main className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 sm:py-8">
         <FlashMessage message={flashMessage} />
 
-        <div className="mb-6 flex items-center justify-center gap-2 text-base font-medium text-slate-900 sm:mb-8 sm:gap-3 sm:text-[22px]">
-          <Medal className="h-5 w-5 text-amber-500 sm:h-7 sm:w-7" />
-          <span>達成回数: {currentGoal.checkin_count}回</span>
-        </div>
-
-      <div className="mx-auto flex max-w-[440px] flex-col gap-5 sm:max-w-[760px] sm:gap-6">
-        {/* 目標名を表示する枠 */}
-        <section className="rounded-3xl border border-slate-200 bg-white/90 px-4 py-5 shadow-sm sm:px-8 sm:py-6">
-          <div className="flex items-center justify-center gap-3 sm:gap-6">
-            <button
-              type="button"
-              onClick={() =>
-                setCurrentIndex((prev) => Math.max(prev - 1, 0))
-              }
-              disabled={currentIndex === 0}
-              className="shrink-0 text-2xl text-slate-500 transition hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
-              aria-label="前の目標を表示"
-            >
-              ◀
-            </button>
-
-            <h2 className="min-w-0 flex-1 break-words text-center text-2xl font-medium text-green-700 sm:text-4xl">
-              {currentGoal.title}
-            </h2>
-
-            <button
-              type="button"
-              onClick={() =>
-                setCurrentIndex((prev) =>
-                  Math.min(prev + 1, goals.length - 1)
-                )
-              }
-              disabled={currentIndex === goals.length - 1}
-              className="shrink-0 text-2xl text-slate-500 transition hover:text-slate-800 disabled:opacity-30 sm:text-3xl"
-              aria-label="次の目標を表示"
-            >
-              ▶
-            </button>
-          </div>
-        </section>
-
-        {/* 木を表示する枠 */}
-        <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-4 shadow-sm sm:p-6">
-          <div className="flex justify-center">
+        <div className="mx-auto flex max-w-[440px] flex-col gap-5 sm:max-w-[760px] sm:gap-6">
+          {/* 木の画像カード */}
+          <section className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
             <DashboardTree count={currentGoal.checkin_count} />
-          </div>
-        </section>
 
-        {/* 達成ボタンと説明文を表示する枠 */}
-        <section className="rounded-3xl border border-slate-200 bg-white/90 px-5 py-6 text-center shadow-sm sm:px-8 sm:py-8">
-          <div className="flex justify-center">
-            {currentGoal.today_checked ? (
-              <button
-                type="button"
-                className="cursor-not-allowed rounded-2xl bg-gray-400 px-8 py-5 text-xl text-white sm:px-14 sm:py-6 sm:text-[26px]"
-                disabled
-              >
-                水やり済み 🌱
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleCheck}
-                disabled={loading}
-                className="rounded-2xl bg-green-600 px-10 py-5 text-xl text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 sm:px-14 sm:py-6 sm:text-[26px]"
-              >
-                {loading && (
-                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                )}
+            <div className="px-5 py-2 sm:px-8 sm:py-3">
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-sm font-semibold text-slate-800 sm:text-lg">
+                  達成回数：{currentGoal.checkin_count}回
+                </p>
 
-                {loading ? "水やり中..." : "達成"}
-              </button>
-            )}
-          </div>
+                <p className="text-sm font-semibold text-green-700 sm:text-lg">
+                  {nextStage
+                    ? `あと${remainingCount}回で成長`
+                    : "最大まで成長しました"}
+                </p>
+              </div>
 
-          <p className="mt-5 text-base text-slate-600 sm:mt-6 sm:text-xl">
-            継続することで、あなたの木が成長します
-          </p>
-        </section>
-      </div>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="h-3 flex-1 overflow-hidden rounded-full bg-slate-200">
+                  <div
+                    className="h-full rounded-full bg-green-600 transition-all duration-500"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+
+                <span className="w-12 text-right text-sm font-semibold text-slate-700">
+                  {progressPercent}%
+                </span>
+              </div>
+            </div>
+
+            {/* 目標名 */}
+            <div className="px-4 py-4 sm:px-6 sm:py-5">
+              <div className="flex items-center justify-center gap-3 sm:gap-6">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCurrentIndex((previous) =>
+                      Math.max(previous - 1, 0)
+                    )
+                  }
+                  disabled={currentIndex === 0}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-50 text-xl text-green-700 transition hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-30 sm:h-12 sm:w-12 sm:text-2xl"
+                  aria-label="前の目標を表示"
+                >
+                  ◀
+                </button>
+
+                <h3 className="min-w-0 flex-1 break-words text-center text-xl font-semibold text-black-700 sm:text-3xl">
+                  {currentGoal.title}
+                </h3>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCurrentIndex((previous) =>
+                      Math.min(previous + 1, goals.length - 1)
+                    )
+                  }
+                  disabled={currentIndex === goals.length - 1}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-50 text-xl text-green-700 transition hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-30 sm:h-12 sm:w-12 sm:text-2xl"
+                  aria-label="次の目標を表示"
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t border-slate-200" />
+
+            {/* 達成回数と次の成長 */}
+            <div className="px-4 py-5 sm:px-6 sm:py-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                {/* 達成回数 */}
+                <div className="rounded-2xl border border-slate-200 bg-white px-3 py-4 sm:px-5 sm:py-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-50 text-xl sm:h-14 sm:w-14 sm:text-2xl">
+                      🏆
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-slate-500 sm:text-sm">
+                        達成回数
+                      </p>
+
+                      <p className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
+                        {currentGoal.checkin_count}
+                        <span className="ml-1 text-base font-normal text-slate-500 sm:text-lg">
+                          回
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 次の成長 */}
+                <div className="rounded-2xl border border-green-200 bg-green-50/40 px-3 py-4 sm:px-5 sm:py-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-xl sm:h-14 sm:w-14 sm:text-2xl">
+                      🌱
+                    </div>
+
+                    <div className="min-w-0">
+                      {nextStage ? (
+                        <>
+                          <p className="text-xs text-slate-500 sm:text-sm">
+                            次の成長まで
+                          </p>
+
+                          <p className="mt-1 flex items-baseline whitespace-nowrap font-semibold text-slate-900">
+                            <span className="text-sm sm:text-lg">あと</span>
+
+                            <span className="mx-1 text-4xl font-bold leading-none text-green-700 sm:text-5xl">
+                              {remainingCount}
+                            </span>
+
+                            <span className="text-base sm:text-lg">回</span>
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-xs text-slate-500 sm:text-sm">
+                            成長状況
+                          </p>
+
+                          <p className="mt-2 text-lg font-bold text-green-700 sm:text-2xl">
+                            最大まで成長
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 進捗バー */}
+              <div className="mt-6">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-xs font-medium text-slate-500 sm:text-sm">
+                    {nextStage ? "次の成長までの進捗" : "成長進捗"}
+                  </p>
+
+                  <p className="text-sm font-semibold text-slate-700">
+                    {progressPercent}%
+                  </p>
+                </div>
+
+                <div className="h-3 overflow-hidden rounded-full bg-slate-200">
+                  <div
+                    className="h-full rounded-full bg-green-600 transition-all duration-500"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-slate-200" />
+
+            {/* 達成ボタン */}
+            <div className="px-4 py-5 text-center sm:px-6 sm:py-6">
+              {currentGoal.today_checked ? (
+                <button
+                  type="button"
+                  disabled
+                  className="flex h-14 w-full cursor-not-allowed items-center justify-center rounded-2xl bg-slate-400 text-lg font-semibold text-white sm:h-16 sm:text-xl"
+                >
+                  水やり済み 🌱
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleCheck}
+                  disabled={loading}
+                  className="flex h-14 w-full items-center justify-center rounded-2xl bg-green-600 text-lg font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 sm:h-16 sm:text-xl"
+                >
+                  {loading && (
+                    <span className="mr-3 inline-block h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  )}
+
+                  {loading ? "水やり中..." : "💧 水やりする"}
+                </button>
+              )}
+
+              <p className="mt-5 text-sm text-slate-600 sm:text-lg">
+                継続することで、あなたの木が成長します
+              </p>
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );
