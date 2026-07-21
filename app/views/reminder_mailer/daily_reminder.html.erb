@@ -1,0 +1,15 @@
+<h1><%= @user.name %>さん、今日の記録はまだです</h1>
+
+<p>
+  「<%= @goal.title %>」を達成したら、GrowLogに記録しましょう。
+</p>
+
+<p>
+  今日の積み重ねで、木がまた少し成長します。
+</p>
+
+<p>
+  <a href="<%= ENV.fetch("FRONTEND_URL") %>/dashboard">
+    GrowLogを開く
+  </a>
+</p>
