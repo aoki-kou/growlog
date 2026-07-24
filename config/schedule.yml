@@ -1,0 +1,5 @@
+daily_reminder_job:
+  cron: "0 20 * * * Asia/Tokyo"
+  class: "DailyReminderJob"
+  queue: default
+  description: "毎日20時に未達成ユーザーへリマインドメールを送る"

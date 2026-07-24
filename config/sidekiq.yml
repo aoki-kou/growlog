@@ -3,10 +3,3 @@
 :queues:
   - default
   - mailers
-
-:scheduler:
-  :schedule:
-    daily_reminder:
-      cron: "0 20 * * * Asia/Tokyo"
-      class: "DailyReminderJob"
-      queue: default
