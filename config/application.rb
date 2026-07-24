@@ -24,6 +24,9 @@ module App
       g.test_framework nil
     end
 
+    config.time_zone = "Tokyo"
+    config.active_record.default_timezone = :local
+
     config.active_job.queue_adapter = :sidekiq
     # Configuration for the application, engines, and railties goes here.
     #
