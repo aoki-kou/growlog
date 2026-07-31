@@ -37,11 +37,10 @@ RSpec.describe "Api::Auth", type: :request do
 
   describe "POST /api/session" do
     let!(:user) do
-      User.create!(
+      create(
+        :user,
         name: "ログインユーザー",
-        email: "login@example.com",
-        password: "password",
-        password_confirmation: "password"
+        email: "login@example.com"
       )
     end
 

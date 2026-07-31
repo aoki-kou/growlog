@@ -12,12 +12,26 @@ Rails.application.routes.draw do
     resources :checkins, only: %i[create]
     resource :session, only: %i[create destroy]
     resources :users, only: %i[create]
-    resources :goals, only: %i[index create destroy]
-    get "calendar", to: "calendars#show"
 
+    resources :goals, only: %i[index create destroy] do
+      member do
+        post :share
+        delete :unshare
+      end
+    end
+
+    get "calendar", to: "calendars#show"
     get "me", to: "me#show"
   end
 
+  get "/share/goals/:token",
+      to: "shared_goals#show",
+      as: :shared_goal
+
+  get "/share/goals/:token/ogp.png",
+      to: "ogp_images#show",
+      as: :shared_goal_ogp,
+      defaults: { format: :png }
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
