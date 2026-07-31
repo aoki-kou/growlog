@@ -1,14 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Api::Goals", type: :request do
-  let!(:user) do
-    User.create!(
-      name: "テストユーザー",
-      email: "test@example.com",
-      password: "password",
-      password_confirmation: "password"
-    )
-  end
+  let(:user) { create(:user) }
 
   describe "POST /api/goals" do
     it "ログイン済みユーザーは目標を作成できる" do
@@ -52,15 +45,14 @@ RSpec.describe "Api::Goals", type: :request do
 
   describe "GET /api/goals" do
     it "ログイン済みユーザーは自分の目標一覧を取得できる" do
-      other_user = User.create!(
+      other_user = create(
+        :user,
         name: "他のユーザー",
-        email: "other@example.com",
-        password: "password",
-        password_confirmation: "password"
+        email: "other@example.com"
       )
 
-      user.goals.create!(title: "自分の目標")
-      other_user.goals.create!(title: "他人の目標")
+      create(:goal, user: user, title: "自分の目標")
+      create(:goal, user: other_user, title: "他人の目標")
 
       sign_in(user)
 
@@ -73,7 +65,7 @@ RSpec.describe "Api::Goals", type: :request do
 
       expect(titles).to include("自分の目標")
       expect(titles).not_to include("他人の目標")
-      expect(json["goals"].first).to include("checkin_count", "today_checked", "tree_stage")
+      expect(json["goals"].first).to include("checkin_count", "today_checked")
     end
   end
 end

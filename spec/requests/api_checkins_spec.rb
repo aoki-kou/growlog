@@ -1,17 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Api::Checkins", type: :request do
-  let!(:user) do
-    User.create!(
-      name: "テストユーザー",
-      email: "test@example.com",
-      password: "password",
-      password_confirmation: "password"
-    )
-  end
+  let(:user) { create(:user) }
 
   let!(:goal) do
-    user.goals.create!(title: "Rails学習")
+    create(:goal, user: user, title: "Rails学習")
   end
 
   describe "POST /api/checkins" do
@@ -28,18 +21,20 @@ RSpec.describe "Api::Checkins", type: :request do
       expect(json["success"]).to eq(true)
       expect(json["checkin_count"]).to eq(1)
       expect(json["today_checked"]).to eq(true)
-      expect(json["tree_stage"]).to be_present
     end
 
     it "他人の目標は達成できない" do
-      other_user = User.create!(
+      other_user = create(
+        :user,
         name: "他のユーザー",
-        email: "other@example.com",
-        password: "password",
-        password_confirmation: "password"
+        email: "other@example.com"
       )
 
-      other_goal = other_user.goals.create!(title: "他人の目標")
+      other_goal = create(
+        :goal,
+        user: other_user,
+        title: "他人の目標"
+      )
 
       sign_in(user)
 

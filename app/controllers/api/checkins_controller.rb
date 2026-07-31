@@ -12,7 +12,7 @@ module Api
         render json: {
           success: true,
           checkin_count: goal.checkins.count,
-          today_checked: true,
+          today_checked: true
         }
       else
         render json: {

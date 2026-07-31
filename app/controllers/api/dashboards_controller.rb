@@ -13,7 +13,7 @@ module Api
             id: goal.id,
             title: goal.title,
             checkin_count: goal.checkins.count,
-            today_checked: goal.checkins.exists?(checked_on: Date.current),
+            today_checked: goal.checkins.exists?(checked_on: Date.current)
             }
           end
         }

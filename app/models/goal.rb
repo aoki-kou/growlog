@@ -12,7 +12,7 @@ class Goal < ApplicationRecord
   end
 
   private
-  
+
   def set_share_token
     loop do
       token = SecureRandom.urlsafe_base64(24)
