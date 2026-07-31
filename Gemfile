@@ -70,3 +70,5 @@ gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 gem "sidekiq"
 gem "sidekiq-cron"
+
+gem "ruby-vips"

@@ -14,7 +14,6 @@ module Api
             title: goal.title,
             checkin_count: goal.checkins.count,
             today_checked: goal.checkins.exists?(checked_on: Date.current),
-            tree_stage: goal.tree_stage
             }
           end
         }

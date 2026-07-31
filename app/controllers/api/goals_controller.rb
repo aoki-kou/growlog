@@ -13,8 +13,9 @@ module Api
             id: goal.id,
             title: goal.title,
             checkin_count: goal.checkins.count,
-            today_checked: goal.checkins.exists?(checked_on: Date.current),
-            tree_stage: goal.tree_stage
+            today_checked: goal.checkins.exists?(
+              checked_on: Date.current
+            )
           }
         end
       }
@@ -34,7 +35,8 @@ module Api
       else
         render json: {
           success: false,
-          error: goal.errors.full_messages.first || "目標を登録できませんでした"
+          error: goal.errors.full_messages.first ||
+                 "目標を登録できませんでした"
         }, status: :unprocessable_entity
       end
     end
@@ -49,6 +51,40 @@ module Api
       }
     end
 
+    def share
+      goal = current_user.goals.find(params[:id])
+
+      goal.update!(share_enabled: true)
+
+      achievement_count = goal.checkins.count
+
+      public_origin = ENV.fetch(
+        "PUBLIC_API_ORIGIN",
+        "https://api.growlog-jp.com"
+      )
+
+      share_url =
+        "#{public_origin}/share/goals/#{goal.share_token}" \
+        "?v=#{achievement_count}"
+
+      render json: {
+        share_url:,
+        goal: {
+          title: goal.title,
+          achievement_count:
+        }
+      }
+    end
+
+    def unshare
+      goal = current_user.goals.find(params[:id])
+
+      goal.update!(share_enabled: false)
+
+      render json: {
+        success: true
+      }
+    end
 
     private
 
@@ -59,7 +95,9 @@ module Api
     def require_login
       return if user_signed_in?
 
-      render json: { error: "unauthorized" }, status: :unauthorized
+      render json: {
+        error: "unauthorized"
+      }, status: :unauthorized
     end
   end
 end

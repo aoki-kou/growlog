@@ -13,7 +13,6 @@ module Api
           success: true,
           checkin_count: goal.checkins.count,
           today_checked: true,
-          tree_stage: goal.tree_stage
         }
       else
         render json: {

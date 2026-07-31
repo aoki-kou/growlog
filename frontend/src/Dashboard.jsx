@@ -104,6 +104,54 @@ export function Dashboard() {
     }
   };
 
+  const handleShareOnX = async () => {
+    if (!currentGoal) return;
+
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/goals/${currentGoal.id}/share`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "共有URLの発行に失敗しました"
+        );
+      }
+
+      const shareText = [
+        `「${currentGoal.title}」を`,
+        `${currentGoal.checkin_count}日達成しました！🌱`,
+        "",
+        "継続することで、木が成長しました。",
+        "",
+        "#GrowLog",
+      ].join("\n");
+
+      const intentUrl =
+        "https://x.com/intent/tweet" +
+        `?text=${encodeURIComponent(shareText)}` +
+        `&url=${encodeURIComponent(data.share_url)}`;
+
+      window.open(
+        intentUrl,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } catch (error) {
+      console.error("Xへの共有に失敗しました", error);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/session`, {
@@ -233,12 +281,12 @@ export function Dashboard() {
             <div className="px-5 py-2 sm:px-8 sm:py-3">
               <div className="flex items-center justify-between gap-4">
                 <p className="text-sm font-semibold text-slate-800 sm:text-lg">
-                  達成回数：{currentGoal.checkin_count}回
+                  達成日数：{currentGoal.checkin_count}日
                 </p>
 
                 <p className="text-sm font-semibold text-green-700 sm:text-lg">
                   {nextStage
-                    ? `あと${remainingCount}回で成長`
+                    ? `あと${remainingCount}日で成長`
                     : "最大まで成長しました"}
                 </p>
               </div>
@@ -308,13 +356,13 @@ export function Dashboard() {
 
                     <div>
                       <p className="text-xs text-slate-500 sm:text-sm">
-                        達成回数
+                        達成日数
                       </p>
 
                       <p className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
                         {currentGoal.checkin_count}
                         <span className="ml-1 text-base font-normal text-slate-500 sm:text-lg">
-                          回
+                          日
                         </span>
                       </p>
                     </div>
@@ -342,7 +390,7 @@ export function Dashboard() {
                               {remainingCount}
                             </span>
 
-                            <span className="text-base sm:text-lg">回</span>
+                            <span className="text-base sm:text-lg">日</span>
                           </p>
                         </>
                       ) : (
@@ -412,6 +460,15 @@ export function Dashboard() {
               <p className="mt-5 text-sm text-slate-600 sm:text-lg">
                 継続することで、あなたの木が成長します
               </p>
+
+              {/* X共有ボタン */}
+              <button
+                type="button"
+                onClick={handleShareOnX}
+                className="mt-4 flex h-14 w-full items-center justify-center rounded-2xl bg-slate-900 text-lg font-semibold text-white transition hover:bg-slate-800"
+              >
+                Xで達成記録を共有
+              </button>
             </div>
           </section>
         </div>
