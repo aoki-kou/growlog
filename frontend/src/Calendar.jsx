@@ -186,7 +186,7 @@ export function Calendar() {
               連続記録
             </p>
             <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
-              2日
+              1日
             </p>
           </div>
 
@@ -195,7 +195,7 @@ export function Calendar() {
               努力回数
             </p>
             <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
-              2回
+              1回
             </p>
           </div>
         </section>
