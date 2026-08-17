@@ -195,7 +195,7 @@ export function Calendar() {
               努力回数
             </p>
             <p className="mt-1 text-xl font-semibold text-green-800 sm:mt-2 sm:text-3xl">
-              1回
+              {checkedDates.length}回
             </p>
           </div>
         </section>
